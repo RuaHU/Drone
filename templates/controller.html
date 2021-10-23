@@ -1,0 +1,27 @@
+fichier temporaire à mettre pour l'interface de controle des drones et des commandes
+{% block control %}
+
+<script>
+    function sendCommand(command, params={}) {
+        console.log({action: 'sendCommand', command: command, params: params});
+        params['command'] = command;
+        $.post("/droneapi/command/", params).done(function (json) {
+            console.log({action: 'sendCommand', json: json});
+        }, 'json')
+    }
+</script>
+
+<div class = "control-space">
+  <div class="video-item">
+    <img src="{{ url_for('drone_video_feed', camid = alt) }}" width="25%" alt = "open camera altName">
+  </div>
+  <div class="controller-box">
+      <div class="control-form">
+          <a href="#" data-role="button" onclick="sendCommand('takeOff'); return false;" class="button">Take Off</a>
+          <a href="#" data-role="button" onclick="sendCommand('land'); return false;" class="button">Land</a>
+      </div>
+  </div>
+</div>
+
+
+{% endblock %}

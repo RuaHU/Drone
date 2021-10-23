@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Fixed cameras{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="gallery">
+  {% for stream in streams %}
+    <div class="gallery-item">
+      <a class="main-camera-selection" href="{{ url_for('camera_monitor', camid = stream.id, mainid=stream.id, ownerid=stream.id) }}"><img class="gallery-image" src="{{ url_for('video_feed', camid = stream.id) }}" width="100%" alt = "open camera altName"></a>
+    </div>
+  {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
+
+<!-- TEMP FOR BACKEND -->
+<!-- <script>
+    function setAsMain(id) {
+      POUR toutes gallery item dans la page, mettre class annexe sauf pour une
+        console.log({action: 'sendCommand', command: command, params: params});
+        params['command'] = command;
+        $.post("/droneapi/command/", params).done(function (json) {
+            console.log({action: 'sendCommand', json: json});
+        }, 'json')
+    }
+</script>
+
+<a href="#" data-role="button" onclick="setAsMain({{ stream.id }}); return false;" class="button_image"><img src="", alt="Ici s'affiche une image"></a> -->

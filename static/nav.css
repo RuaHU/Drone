@@ -1,0 +1,88 @@
+nav {
+    z-index:1;
+}
+nav, .nav-links{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    /* font-family: 'Poppins', sans-serif; */
+}
+.nav-links{
+    width:30%;
+}
+.header-logo{
+    text-decoration: none;
+    color:#e2e2e2;
+    text-transform:uppercase;
+    letter-spacing: 5px;
+    font-size: 20px;
+}
+nav {
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%;
+    height: 50px;
+    background-color: #264653;
+    /*264653 2a9d8f e9c46a f4a261 e76f51*/
+    /* font-family: 'Poppins', sans-serif; */
+}
+
+
+
+.nav-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color:#e2e2e2;
+    letter-spacing: 2px;
+    font-size:16px;
+    font-weight: bold;
+    padding-left: 10px;
+    padding-right: 10px;
+    /* color:white;
+    background-color:lightblue;
+    border-radius: 10px;
+     */
+  }
+
+.nav-button:hover,  .header-logo:hover{
+    cursor: pointer;
+    /* color:#2a9d8f; */
+    color:#e76f51;
+    /* color:white;
+    background-color:lightblue;
+    border-radius: 10px;
+     */
+}
+
+.signin-button {
+    border:black;
+    background: #2a9d8f;
+    cursor: pointer;
+    color:#e2e2e2;
+    letter-spacing: 2px;
+    font-size:16px;
+    font-weight: bold;
+    border-radius: 4px;
+    padding: 3px 20px
+    /* color:white;
+    background-color:lightblue;
+    border-radius: 10px;
+     */
+  }
+
+.signin-button:hover,  .header-logo:hover{
+    cursor: pointer;
+    /* color:#2a9d8f; */
+    color:#e76f51;
+    /* color:white;
+    background-color:lightblue;
+    border-radius: 10px;
+     */
+}
+
+a, a:hover, a:focus, a:active {
+    text-decoration: none;
+    color: inherit;
+}

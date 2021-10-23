@@ -1,0 +1,59 @@
+<!doctype html>
+<head>
+<title>{% block title %}{% endblock %} - UTT</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='nav.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='control.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='monitorApp.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='demoMonitorApp.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='leaflet.css') }}">
+<!-- SUPPORT FOR LEAFLET MAP-->
+<!--<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>-->
+ <!-- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>-->
+<!-- <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"> -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<script type=text/javascript src="{{
+  url_for('static', filename='jquery.js') }}"></script>
+<script type=text/javascript src="{{
+  url_for('static', filename='leaflet.js') }}"></script>
+
+</head>
+<script>
+    function sendCommand(command, droneId, url, params={}) {
+        console.log({action: 'sendCommand', command: command, droneId:droneId, params: params});
+        params['command'] = command;
+        params['droneId'] = droneId;
+        $.post(url, params).done(function (json) {
+            console.log({action: 'sendCommand', json: json});
+        }, 'json')
+    }
+</script>
+
+
+
+<body>
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  <section class="main-navbar">
+    <nav>
+      <a class="header-logo" href="{{ url_for('index') }}"><h1>Monitor</h1></a>
+      <ul class="nav-links">
+        <li ><a class="nav-button" href="{{ url_for('index') }}">Home</a></li>
+        <li ><a class="nav-button" href="">Help</a></li>
+        <li ><a class="nav-button" href="">About</a></li>
+      </ul>
+    </nav>
+  </section>
+<section class="content">
+  {% block content %}{% endblock %}
+</section>
+<footer>
+  {% block controller %}
+  {% endblock %}
+</footer>
+</body>

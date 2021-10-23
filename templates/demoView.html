@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+
+{% block title %}Monitor {{ mainid }}{% endblock %}
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+<div class="demo-app-container">
+  <!-- <div class="demo-main-gallery-item" id = "mainDiv">
+        <img class="demo-main-image" src="{{ url_for('video_feed', camid = mainid) }}" width="60%" alt = "open camera altName">
+        <h3 class="demo-main-title">Camera : {{ mainid }}</h2>
+    </div> -->
+
+    {% for droneId in drones %}
+      <div class="demo-alt-gallery-item video-item">
+        <a href="{{ url_for('camera_monitor_demo',camid = camid, mainid=droneId) }}">
+          <img src="{{ url_for('video_feed', camid = droneId) }}" width="30%" alt = "open camera altName">
+        </a>
+        <h3 class="demo-alt-title">Camera : {{ droneId }}</h3>
+      </div>
+    {% endfor %}
+
+    <div class="demo-alt-gallery-item">
+      <div id="map" style="height: 300px;"></div>
+
+      <script>
+
+          var map = L.map('map').setView([48.26, 4.06], 13)
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition((position) => {
+                  map.panTo(L.latLng(position.coords.latitude, position.coords.longitude))
+                  console.log(position.coords.latitude, position.coords.longitude)
+              })
+          }
+          L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+              attribution: 'Open street map'
+          }).addTo(map)
+          if (document.querySelector('.demo-alt-gallery-item').offsetHeight > 50){
+            $("#map").height(document.querySelector('.demo-alt-gallery-item').offsetHeight).width(document.querySelector('.demo-alt-gallery-item').offsetWidth);
+            map.invalidateSize();
+          }
+          {% for fixedId in allData %}
+          L.marker([{{ fixedId['latitude'] }}, {{ fixedId['longitude'] }}]).addTo(map)
+              .bindPopup("{{ fixedId['altName']  }} with id {{ fixedId['id']  }}")
+              .openPopup();
+          {% endfor %}
+      </script>
+    </div>
+
+    <div class="demo-alt-gallery-item">
+      <canvas id="canvas"></canvas>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+      <script>
+        Chart.defaults.global.defaultFontColor='#e2e2e2';
+          $(document).ready(function () {
+              const config = {
+                  type: 'line',
+                  data: {
+                      labels: [],
+                      datasets: [
+                      {% for droneId in drones %}
+                      {
+                          id:"{{ droneId }}",
+                          label: "{{ droneId }}",
+                          backgroundColor: "{{ colors[droneId] }}",
+                          borderColor: "{{ colors[droneId] }}",
+                          data: [],
+                          fill: false,
+                      },
+                      {% endfor %}
+                      ],
+                  },
+                  options: {
+                      responsive: true,
+                      title: {
+                          display: true,
+                          text: 'Person counter'
+                      },
+                      tooltips: {
+                          mode: 'index',
+                          intersect: false,
+                      },
+                      hover: {
+                          mode: 'nearest',
+                          intersect: true
+                      },
+                      scales: {
+                          xAxes: [{
+                              display: true,
+                              scaleLabel: {
+                                  display: true,
+                                  labelString: 'Time'
+                              }
+                          }],
+                          yAxes: [{
+                              display: true,
+                              scaleLabel: {
+                                  display: true,
+                                  labelString: 'Value'
+                              }
+                          }]
+                      }
+                  }
+              };
+
+              const context = document.getElementById('canvas').getContext('2d');
+
+              const lineChart = new Chart(context, config);
+
+              const source = new EventSource("/chart-data");
+
+              source.onmessage = function (event) {
+                  const data = JSON.parse(event.data);
+                  if (config.data.labels.length === 20) {
+                      config.data.labels.shift();
+                      config.data.datasets[0].data.shift();
+                  }
+                  let timestampBy;
+                  for (var i = 0; i < config.data.datasets.length; i++){
+                    config.data.datasets[i].data.push(data[config.data.datasets[i].id].value)
+                    if ('time' in data[config.data.datasets[i].id]){
+                      timestampBy = config.data.datasets[i].id
+                    }
+                  }
+                  // for (var key in data){
+                  //   config.data.datasets[key].data.push(data[key].value);
+                  // }
+                  config.data.labels.push(data[timestampBy].time);
+                  // config.data.datasets[0].data.push(data[0].value);
+                  lineChart.update();
+              }
+          });
+      </script>
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="demo-control-item">
+      <p id="controller">Controller</p>
+      <a href="#" data-role="button" onclick="sendCommand('up', '{{ mainid }}', '/droneapi/command/'); return false;" class="button-controller" id="up" title="up">&#8657;</a>
+      <a href="#" data-role="button" onclick="sendCommand('down', '{{ mainid }}', '/droneapi/command/'); return false;" class="button-controller" id="down" title="down">&#8659;</a>
+      <a href="#" data-role="button" onclick="sendCommand('right', '{{ mainid }}', '/droneapi/command/'); return false;" class="button-controller" id="right" title="right">&#8594;</a>
+      <a href="#" data-role="button" onclick="sendCommand('left', '{{ mainid }}', '/droneapi/command/'); return false;" class="button-controller" id="left" title="left">&#8592;</a>
+      <a href="#" data-role="button" onclick="sendCommand('ccw', '{{ mainid }}', '/droneapi/command/'); return false;" class="button-controller" id="ccw" title="rotate anticlockwise">&#8634;</a>
+      <a href="#" data-role="button" onclick="sendCommand('cw', '{{ mainid }}', '/droneapi/command/'); return false;" class="button-controller" id="cw" title="rotate clockwise">&#8635;</a>
+      <a href="#" data-role="button" onclick="sendCommand('forward', '{{ mainid }}', '/droneapi/command/'); return false;" class="button-controller" id="forward" title="forward">&#8593;</a>
+      <a href="#" data-role="button" onclick="sendCommand('back', '{{ mainid }}', '/droneapi/command/'); return false;" class="button-controller" id="back" title="backward">&#8595;</a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block controller %}
+<div class="control-panel">
+  <div class = "control-space">
+    <div class="video-item">
+      <img src="{{ url_for('video_feed', camid = mainid) }}" width="25%" alt = "open camera altName">
+    </div>
+    <div class="controller-box">
+        <div class="control-form">
+          <a href="#" data-role="button" onclick="sendCommand('takeOff', '{{ mainid }}', '/droneapi/command/'); return false;" class="button">Take Off</a>
+          <a href="#" data-role="button" onclick="sendCommand('land','{{ mainid }}', '/droneapi/command/'); return false;" class="button">Land</a>
+          <a href="#" data-role="button" onclick="sendCommand('landall','{{ mainid }}', '/droneapi/command/'); return false;" class="button">Land all</a>
+        </div>
+    </div>
+    <div class="tracking-params">
+      <div class="control-form">
+        <a href="#" data-role="button" onclick="sendCommand('track', '{{ mainid }}', '/trackingapi/params/'); return false;" class="button">Track</a>
+        <a href="#" data-role="button" onclick="sendCommand('reid','{{ mainid }}', '/trackingapi/params/'); return false;" class="button">REID</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+.app-container {
+  display: flex;
+  flex-direction: row;
+  justify-content:space-around;
+}
+
+.app-container img {
+  max-width:100%;
+  max-height:65vh
+}
+hr {
+    border: none;
+    border-top: 3px double #333;
+    color: #333;
+    overflow: visible;
+    text-align: center;
+    height: 5px;
+}
+
+.main-gallery-item .main-title{
+
+}
+.main-gallery-item .alt-title{
+
+}
+.app-container *{
+  color: #fff;
+}
+.alt-views{
+  display: flex;
+  flex-direction: column;
+  flex-basis:50%;
+  overflow-y: auto;
+  height: 65vh;
+}
+.main-views{
+  flex-grow:2;
+}
+
+.alt-gallery-item{
+  margin:1.5rem;
+}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Monitor {{ mainid }}{% endblock %}
+{% block header %}
+<div style="margin-top : 50px;margin-bottom:3rem;padding-top:7px">
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="app-container">
+  <div class="main-views">
+    <div class="main-gallery-item">
+        <img class="main-image" src="{{ url_for('video_feed', camid = mainid) }}" width="60%" alt = "open camera altName">
+        <h2 class="main-title">Camera : {{ mainid }}</h2>
+    </div>
+
+    </div>
+    <div class="alt-views">
+    {% for droneId in drones %}
+      <div class="alt-gallery-item">
+        <a href="{{ url_for('camera_monitor',camid = camid, mainid=droneId) }}">
+          <img src="{{ url_for('video_feed', camid = droneId) }}" width="30%" alt = "open camera altName">
+        </a>
+
+        <h3 class="alt-title">Camera : {{ droneId }}</h3>
+        <hr>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block controller %}
+<div class="control-panel">
+  <div class = "control-space">
+    <div class="video-item">
+      <img src="{{ url_for('video_feed', camid = mainid) }}" width="25%" alt = "open camera altName">
+    </div>
+    <div class="controller-box">
+        <div class="control-form">
+          <a href="#" data-role="button" onclick="sendCommand('takeOff', '{{ mainid }}', '/droneapi/command/'); return false;" class="button">Take Off</a>
+          <a href="#" data-role="button" onclick="sendCommand('land','{{ mainid }}', '/droneapi/command/'); return false;" class="button">Land</a>
+          <a href="#" data-role="button" onclick="sendCommand('landall','{{ mainid }}', '/droneapi/command/'); return false;" class="button">Land all</a>
+        </div>
+    </div>
+    <div class="tracking-params">
+      <div class="control-form">
+        <a href="#" data-role="button" onclick="sendCommand('track', '{{ mainid }}', '/trackingapi/params/'); return false;" class="button">Track</a>
+        <a href="#" data-role="button" onclick="sendCommand('reid','{{ mainid }}', '/trackingapi/params/'); return false;" class="button">REID</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

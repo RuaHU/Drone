@@ -1,0 +1,75 @@
+{
+    "FixedCamera": [
+      {
+        "id":0,
+        "work":0,
+        "altName":"Main top camera",
+        "ip":"rtsp://192.168.0.151/media/video1",
+        "latitude":48.2700031,
+        "longitude":4.064,
+        "alerts":[
+          {
+            "zone":[-1000,0,0,0],
+            "droneId":[2]
+          }
+        ]
+      },
+      {
+        "id":1,
+        "work":0,
+        "altName":"Secondary monitoring camera",
+        "ip":"rtsp://192.168.0.104/media/video1",
+        "latitude":48.27000,
+        "longitude":4.065,
+        "alerts":[
+          {
+            "zone":[-1000.0, 0.0, 0.0, 0.0],
+            "droneId":[2]
+          }
+        ]
+      }
+    ],
+    
+    "DroneCamera":[
+      {
+        "id":2,
+        "work":0,
+        "altName":"Tello",
+        "droneController":"DJI"
+      }
+    ],
+    
+    "Video": [
+        {
+            "id":3,
+            "work":1,
+            "droneId":[5],
+            "latitude":48.2700031,
+            "longitude":4.064,
+            "altName":"Main Top Camera Video",
+            "path":"/home/hu/Projects/Drone/DroneSystemDemo/records/2021-6-4-17-57-44-main_monitor/output.avi",
+            "timestamp":"/home/hu/Projects/Drone/DroneSystemDemo/records/2021-6-4-17-57-44-main_monitor/timestamp.txt"
+        },
+        {
+            "id":4,
+            "work":0,
+            "droneId":[5],
+            "latitude":48.27000,
+            "longitude":4.065,
+            "altName":"Scene Monitor Camera Video",
+            "path" : "/home/hu/Projects/Drone/DroneSystemDemo/records/2021-6-4-17-57-51-aux_monitor/output.avi",
+            "timestamp": "/home/hu/Projects/Drone/DroneSystemDemo/records/2021-6-4-17-57-51-aux_monitor/timestamp.txt"
+        },
+        {
+            "id":5,
+            "work":1,
+            "droneId":[],
+            "latitude":48.27000,
+            "longitude":4.066,
+            "altName":"Drone Video",
+            "path" : "/home/hu/Projects/Drone/DroneSystemDemo/records/2021-6-4-17-57-48-drone/output.avi",
+            "timestamp":"/home/hu/Projects/Drone/DroneSystemDemo/records/2021-6-4-17-57-48-drone/timestamp.txt"
+            
+        }
+    ]
+}
