@@ -166,13 +166,13 @@ where _source is the source of video stream. It could be a rtsp video stream add
 
 where _bRecording is set True to record the videos, this is specifically for system debugging.
 the recorded video will be saved in records/.../output.avi and records/.../timestamp.txt.
-####Example Read from Stream
+#### Example Read from Stream
 ```python
 reader = Reader("rtsp://192.168.0.151/media/video1", 1)
 image, timestamp = reader.read()
 ```
 
-####Example Read from Videos
+#### Example Read from Videos
 ```python
 video_dict = {1:[path/to/video/.avi, path/to/timestamp/.txt],
                         2:[path/to/video/.avi, path/to/timestamp/.txt]}
