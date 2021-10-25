@@ -60,6 +60,7 @@ image = cv2.imread('demo/1.jpg')
 detection = detector.det(image)
 ```
 This example using yolov4-tiny as detector to get detection of the input image demo/1.jpg.
+
 The detector could be  ['yolov3', 'yolov4', 'yolov3-tiny', 'yolov4-tiny', 'dla_34', 'mrcnn'].
 
 #### Custom Detector
