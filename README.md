@@ -4,7 +4,9 @@
 
 ### Demo
 A fixed camera for indoor person tracking
+
 A mobile camera (drone) for outdoor person tracking
+
 When a person go to the alert region (manually specified rectangle) will trigger the drone to continue track the person and change it's viewport to center the person.
 
 ![Demo](https://github.com/RuaHU/Drone/blob/main/Documents/demo.jpg?raw=true)
@@ -334,4 +336,4 @@ class flaskWebImageConsumer(threading.Thread):
                     self.__imagePool[_producer.id] = self.__imagePool[_producer.id][-20:]
             time.sleep(0.02)
 ```
-###End
+### End
